@@ -6,20 +6,29 @@
     </head>
     <body>
         <div id='root'>
-            <div>{{text}}</div>
-            <form v-on:submit='onsubmitForm'>
-                <input type='text' v-model='value' ref='answer'>
-                <button type='submit'>입력</button>
-            </form>
-            <div>{{result}}</div>
+            <text-relay start-text="끝말잇기"></text-relay>
+            <text-relay start-text="안녕하세요"></text-relay>
+            <text-relay start-text="게임시작"></text-relay>
         </div>
         <script>
-            const app = new Vue({
-                el : "#root",
-                data: {
-                    text:'끝말잇기',
-                    result: '',
-                    value: '',
+            Vue.component('text-relay',{
+                template: `
+                <div>
+                    <div>{{text}}</div>
+                        <form v-on:submit='onsubmitForm'>
+                            <input type='text' v-model='value' ref='answer'>
+                            <button type='submit'>입력</button>
+                        </form>
+                    <div>{{result}}</div>
+                </div>
+                `,
+                props: ['startText'],
+                data() {
+                    return{
+                        text: this.startText,
+                        result: '',
+                        value: '',
+                    }
                 },
                 methods: {
                     onsubmitForm(e){
@@ -35,6 +44,12 @@
                         }
                     },
                 },
+            })
+
+        </script>
+        <script>
+            const app = new Vue({
+                el : "#root",
             })
         </script>
     </body>
